@@ -5,16 +5,17 @@ import { Button, TouchableOpacity } from 'react-native-web';
 export default function FourthPage() {
   return (
     <View style={styles.container}>
-        <View>
-        <Image
-            style={{width: 400, height: 400}} 
-            source={{
-                uri: 'https://image.tmdb.org/t/p/original/'+ poster_path
-            }}
-        />     
-        <Text>{vote_average}</Text>
-        <Text>{vote_count}</Text>
-        <Text>{overview}</Text>
+        <View style={styles.resultTable}>
+            <View>
+                <Text>
+                    Picture
+                </Text>
+            </View>
+            <View>
+                <Text>
+                    Votes
+                </Text> 
+            </View>
         </View>
         
     </View>
@@ -23,11 +24,19 @@ export default function FourthPage() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+
+  resultTable: {
     flex: 1,
+    flexDirection:'row',
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 
   text:{

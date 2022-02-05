@@ -45,18 +45,12 @@ export default function FirstPage({ navigation }) {
       
   return (
 <View>
+    {showHomeButton && <View style={styles.container}>
     <Image
-         style={{width: 400, height: 620, borderRadius: 35, borderWidth: 5}} 
+         style={styles.logo} 
         source={require('../assets/TinderMovieLogo.jpg')
         }
       />
-    {showHomeButton && <View style={styles.container}>
-    <Image
-         style={{width: 400, height: 400}} 
-        source={{
-          uri: './assets/icon.png',
-        }}
-      /> 
     <View style={styles.fixToText}>
     <TouchableOpacity style={styles.button} onPress={createButtonClick}>
         <Text style={styles.text}>Create</Text>
@@ -74,6 +68,7 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            ref={RoomNameInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -92,6 +87,7 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            ref={NumberOfMovieInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -116,6 +112,7 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            ref={RoomNumberInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -142,22 +139,25 @@ export default function FirstPage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+    logo:
+    {
+        width: 400,
+        height: 620,
+        borderRadius: 35,
+        borderWidth: 5
+    },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  text:{
-    fontFamily:''
-  },
-
-  input: {
+input: {
     backgroundColor: '#cba',
-    paddingVertical: 10
+    paddingVertical: 10,
+    margin: 10,
+    textAlign: 'center'
   },
-
 
   fixToText: {
     flex: 1,
