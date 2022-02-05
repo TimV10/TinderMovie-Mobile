@@ -2,9 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 
-export default function ThirdPage() {
+export default function FourthPage() {
   return (
     <View style={styles.container}>
+        <View>
         <Image
             style={{width: 400, height: 400}} 
             source={{
@@ -14,6 +15,7 @@ export default function ThirdPage() {
         <Text>{vote_average}</Text>
         <Text>{vote_count}</Text>
         <Text>{overview}</Text>
+        </View>
         
     </View>
     

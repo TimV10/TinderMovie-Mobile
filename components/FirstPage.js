@@ -4,7 +4,7 @@ import { TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TouchableOpacity } from 'react-native-web';
 
-export default function FirstPage() {
+export default function FirstPage({ navigation }) {
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
           roomName: '',
@@ -12,7 +12,11 @@ export default function FirstPage() {
           roomNumber: '',
         }
       });
-      const onSubmit = data => console.log(data);
+      const onSubmit = (data) => {
+            navigation.navigate("SecondPage");
+            console.log(data)
+        
+        };
 
      const [showCreateForm, setShowCreateForm] = useState(false);
      const [showJoinForm, setShowJoinForm] = useState(false);
@@ -41,6 +45,11 @@ export default function FirstPage() {
       
   return (
 <View>
+    <Image
+         style={{width: 400, height: 620, borderRadius: 35, borderWidth: 5}} 
+        source={require('../assets/TinderMovieLogo.jpg')
+        }
+      />
     {showHomeButton && <View style={styles.container}>
     <Image
          style={{width: 400, height: 400}} 
@@ -143,6 +152,12 @@ const styles = StyleSheet.create({
   text:{
     fontFamily:''
   },
+
+  input: {
+    backgroundColor: '#cba',
+    paddingVertical: 10
+  },
+
 
   fixToText: {
     flex: 1,

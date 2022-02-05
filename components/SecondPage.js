@@ -2,21 +2,22 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 
-export default function SecondPage() {
+export default function SecondPage({navigation}) {
 
-    const [onLoadText, setText] = useState("");
-    
+    const startButtonClicks = () =>{
+        navigation.navigate("ThirdPage");
+    }
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.Logo}>Logo</Text>
-      <Text style={styles.sharedLink}>sharedLink</Text>
-      <View style={styles.userStatus}>
-
-      </View>
-      <TouchableOpacity>
-        Start
+      <Text style={styles.sharedLink}>Shared Code</Text>
+      <TouchableOpacity style={styles.button}>
+          <Text style={styles.text} onPress={startButtonClicks}>
+                Start
+          </Text>
       </TouchableOpacity>
-      <StatusBar style="auto" />
     </View>
     
   );
@@ -30,7 +31,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  text:{
-    fontFamily:''
-  }
+
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
+  },
+
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    width:30,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'black',
+    margin:5
+  },
+
 });
