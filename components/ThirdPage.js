@@ -1,10 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import FirstPage from './components/FirstPage';
-export default function App() {
+import { Button, TouchableOpacity } from 'react-native-web';
+
+export default function ThirdPage() {
   return (
     <View style={styles.container}>
-      <FirstPage/>
+      <Text style={styles.Logo}>Logo</Text>
+      <TouchableOpacity>
+        Create
+      </TouchableOpacity>
+      <TouchableOpacity>
+        Join
+      </TouchableOpacity>
+      <StatusBar style="auto" />
     </View>
     
   );
