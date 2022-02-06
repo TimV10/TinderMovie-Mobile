@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 
 export default function FourthPage() {
+
   return (
     <LinearGradient
     // Background Linear Gradient
@@ -12,18 +14,8 @@ export default function FourthPage() {
   >
     <View style={styles.container}>
         <View style={styles.resultTable}>
-            <View>
-                <Text>
-                    Picture
-                </Text>
-            </View>
-            <View>
-                <Text>
-                    Votes
-                </Text> 
-            </View>
+            
         </View>
-        
     </View>
     </LinearGradient>
     

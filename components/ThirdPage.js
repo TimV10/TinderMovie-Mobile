@@ -4,8 +4,18 @@ import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import TinderCard from 'react-tinder-card'
 
+ 
 export default function ThirdPage({navigation}) {
+
+  const onSwipe = (direction) => {
+    console.log('You swiped: ' + direction)
+  }
+  
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + ' left the screen')
+  }
 
     const startButtonClicks = () =>{
         navigation.navigate("FourthPage");
@@ -24,12 +34,14 @@ export default function ThirdPage({navigation}) {
     <TouchableOpacity style={styles.crossButton}>
     <FontAwesomeIcon icon={ faTimes } size={50} />
     </TouchableOpacity>
+    <TinderCard onSwipe={onSwipe} onCardLeftScreen={() => onCardLeftScreen('fooBar')} preventSwipe={['up', 'down']}>
         <Image
             style={{width: 100, height: 100}} 
             source={{
                 uri: 'https://image.tmdb.org/t/p/original/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg'
             }}
-        />     
+        />    
+    </TinderCard>
         <Text>Vote Average</Text>
         <Text>Vote Count</Text>
         <Text>Overview</Text>
