@@ -1,14 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function ThirdPage({navigation}) {
 
     const startButtonClicks = () =>{
         navigation.navigate("FourthPage");
     }
-    
+
   return (
+    <LinearGradient
+    // Background Linear Gradient
+    colors={['rgba(44, 41, 36, 0.8)','rgba(87, 68, 60, 0.8)', 'rgba(136, 87, 67, 0.8)', 'rgba(179, 87, 48, 0.8)', 'rgba(222, 79, 18, 0.8)']}
+    style={styles.background}
+  >
     <View style={styles.container}>
         <Image
             style={{width: 100, height: 100}} 
@@ -25,14 +31,13 @@ export default function ThirdPage({navigation}) {
           </Text>
       </TouchableOpacity>
     </View>
-    
+        </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -62,4 +67,11 @@ const styles = StyleSheet.create({
     margin:5
   },
 
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '100%',
+  },
 });

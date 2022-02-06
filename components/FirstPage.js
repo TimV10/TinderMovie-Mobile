@@ -2,7 +2,7 @@ import { StyleSheet, Text, Touchable, View , Image } from 'react-native';
 import React, { useState } from "react";
 import { TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { TouchableOpacity } from 'react-native-web';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function FirstPage({ navigation }) {
@@ -54,7 +54,7 @@ export default function FirstPage({ navigation }) {
     {showHomeButton && <View style={styles.container}>
     <Image
          style={styles.logo} 
-        source={require('../assets/TinderMovieLogo.jpg')
+        source={require('../assets/TinderMovie2.jpg')
         }
       />
     <View style={styles.fixToText}>
@@ -108,7 +108,7 @@ export default function FirstPage({ navigation }) {
     </TouchableOpacity>
       </View>}
 
-      {showJoinForm && <View>
+      {showJoinForm && <View style={styles.form}>
         <Controller
         control={control}
         rules={{
@@ -144,8 +144,9 @@ export default function FirstPage({ navigation }) {
 const styles = StyleSheet.create({
     logo:
     {
-        width: 400,
-        height: 220,
+        marginTop:10,
+        width: '50%',
+        height: 500,
         borderRadius: 35,
         borderWidth: 5
     },
@@ -176,7 +177,6 @@ input: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
 
   button: {
@@ -200,9 +200,8 @@ input: {
   },
 
   form:{
-    flex: 1,
-    width:'50%',
-    justifyContent:'center',
-    alignItems:'center',
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });

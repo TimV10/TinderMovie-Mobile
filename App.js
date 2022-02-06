@@ -13,7 +13,7 @@ export default function App() {
 
   return (
     <NavigationContainer styles={styles.container}>
-      <Stack.Navigator initialRouteName='FirstPage' >
+      <Stack.Navigator initialRouteName='SecondPage' >
         <Stack.Screen
          name="FirstPage"
          component={FirstPage}
