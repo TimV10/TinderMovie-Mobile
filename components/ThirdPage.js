@@ -1,4 +1,4 @@
-import React, { useState, childRefs, useMemo } from 'react';
+import React, { useState, childRefs, useMemo, useEffect  } from 'react';
 import { StyleSheet, Text, View, Image, Card, CardContainer, CardTitle,} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -6,21 +6,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import TinderCard from 'react-tinder-card'
 
-const db = [
-  {
-    name: 'Richard Hendricks',
-    img: require('../assets/TinderMovieLogo.jpg')
-  },
-  {
-    name: 'Erlich Bachman',
-    img: require('../assets/TinderMovie2.jpg')
-  },
-]
+ 
+export default function ThirdPage({navigation,route }) {
+
+  const {code} = route.params;
+
+    const [data, setData] = useState([]);
+
+    const getMovies = async () => {
+         const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ code +'/movies');
+         const json = await response.json();
+        console.log(json)
+         setData(json.movies);
+
+     }
+
+     useEffect(() => {
+        getMovies();
+      }, []);
+    
+   const db = data
 
 const alreadyRemoved = []
-let charactersState = db  
+let charactersState = db    
 
-export default function ThirdPage({navigation}) {
   const [characters, setCharacters] = useState(db)
   const [lastDirection, setLastDirection] = useState()
 
@@ -34,15 +43,15 @@ export default function ThirdPage({navigation}) {
 
   const outOfFrame = (name) => {
     console.log(name + ' left the screen!')
-    charactersState = charactersState.filter(character => character.name !== name)
+    charactersState = charactersState.filter(character => character.movie_id !== name)
     setCharacters(charactersState)
   }
 
   const swipe = (dir) => {
-    const cardsLeft = characters.filter(person => !alreadyRemoved.includes(person.name))
+    const cardsLeft = characters.filter(person => !alreadyRemoved.includes(person.movie_id))
     if (cardsLeft.length) {
-      const toBeRemoved = cardsLeft[cardsLeft.length - 1].name // Find the card object to be removed
-      const index = db.map(person => person.name).indexOf(toBeRemoved) // Find the index of which to make the reference to
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].movie_id // Find the card object to be removed
+      const index = db.map(person => person.movie_id).indexOf(toBeRemoved) // Find the index of which to make the reference to
       alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
       childRefs[index].current.swipe(dir) // Swipe the card!
     }
@@ -61,11 +70,11 @@ export default function ThirdPage({navigation}) {
   >
     <View style={styles.container}>
         {characters.map((character, index) =>
-          <TinderCard ref={childRefs[index]} key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
+          <TinderCard ref={childRefs[index]} key={character.movie_id} onSwipe={(dir) => swiped(dir, character.movie_id)} onCardLeftScreen={() => outOfFrame(character.movie_id)}>
             <Image
             style={{width: 100, height: 100}} 
             source={{
-                uri: character.img
+                uri: 'https://image.tmdb.org/t/p/original'+character.poster_path
             }}
         />  
           </TinderCard>
