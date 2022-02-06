@@ -1,34 +1,86 @@
 import React, { useState, childRefs, useMemo, useEffect  } from 'react';
-import { StyleSheet, Text, View, Image, Card, CardContainer, CardTitle,} from 'react-native';
+import { StyleSheet} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import TinderCard from 'react-tinder-card'
 
+import styled from 'styled-components/native'
+
+
+const Container = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+`
+
+const Header = styled.Text`
+    color: #000;
+    font-size: 30px;
+    margin-bottom: 30px;
+`
+
+const CardContainer = styled.View`
+    width: 90%;
+    max-width: 260px;
+    height: 300px;
+`
+
+const Card = styled.View`
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    max-width: 260px;
+    height: 300px;
+    shadow-color: black;
+    shadow-opacity: 0.2;
+    shadow-radius: 20px;
+    border-radius: 20px;
+    resize-mode: cover;
+`
+
+const CardImage = styled.ImageBackground`
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 20px;
+`
+
+const CardTitle = styled.Text`
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+    color: #fff;
+`
+
+const Buttons = styled.View`
+    margin: 20px;
+    z-index: -100;
+`
+
+const InfoText = styled.Text`
+    height: 28px;
+    justify-content: center;
+    display: flex;
+    z-index: -100;
+`
+
+
+
+
+
  
 export default function ThirdPage({navigation,route }) {
 
-  const {code} = route.params;
+  const {data} = route.params;
 
-    const [data, setData] = useState([]);
+  const db = data;
+  const alreadyRemoved = []
+  let charactersState = db
 
-    const getMovies = async () => {
-         const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ code +'/movies');
-         const json = await response.json();
-        console.log(json)
-         setData(json.movies);
-
-     }
-
-     useEffect(() => {
-        getMovies();
-      }, []);
-    
-   const db = data
-
-const alreadyRemoved = []
-let charactersState = db    
+  const Advanced = () => {
 
   const [characters, setCharacters] = useState(db)
   const [lastDirection, setLastDirection] = useState()
@@ -43,62 +95,50 @@ let charactersState = db
 
   const outOfFrame = (name) => {
     console.log(name + ' left the screen!')
-    charactersState = charactersState.filter(character => character.movie_id !== name)
+    charactersState = charactersState.filter(character => character.title !== name)
     setCharacters(charactersState)
   }
 
   const swipe = (dir) => {
-    const cardsLeft = characters.filter(person => !alreadyRemoved.includes(person.movie_id))
+    const cardsLeft = characters.filter(person => !alreadyRemoved.includes(person.title))
     if (cardsLeft.length) {
-      const toBeRemoved = cardsLeft[cardsLeft.length - 1].movie_id // Find the card object to be removed
-      const index = db.map(person => person.movie_id).indexOf(toBeRemoved) // Find the index of which to make the reference to
+      const toBeRemoved = cardsLeft[cardsLeft.length - 1].title // Find the card object to be removed
+      const index = db.map(person => person.title).indexOf(toBeRemoved) // Find the index of which to make the reference to
       alreadyRemoved.push(toBeRemoved) // Make sure the next card gets removed next time if this card do not have time to exit the screen
       childRefs[index].current.swipe(dir) // Swipe the card!
     }
   }
-  
-
-    const startButtonClicks = () =>{
-        navigation.navigate("FourthPage");
-    }
-
   return (
     <LinearGradient
     // Background Linear Gradient
     colors={['rgba(44, 41, 36, 0.8)','rgba(87, 68, 60, 0.8)', 'rgba(136, 87, 67, 0.8)', 'rgba(179, 87, 48, 0.8)', 'rgba(222, 79, 18, 0.8)']}
     style={styles.background}
   >
-    <View style={styles.container}>
+    <Container>
+      <Header>Movinder</Header>
+      <CardContainer>
         {characters.map((character, index) =>
-          <TinderCard ref={childRefs[index]} key={character.movie_id} onSwipe={(dir) => swiped(dir, character.movie_id)} onCardLeftScreen={() => outOfFrame(character.movie_id)}>
-            <Image
-            style={{width: 100, height: 100}} 
-            source={{
-                uri: 'https://image.tmdb.org/t/p/original'+character.poster_path
-            }}
-        />  
+          <TinderCard ref={childRefs[index]} key={character.title} onSwipe={(dir) => swiped(dir, character.title)} onCardLeftScreen={() => outOfFrame(character.title)}>
+            <Card>
+              <CardImage source={"https://image.tmdb.org/t/p/original"+character.poster_path}>
+                <CardTitle>{character.title}</CardTitle>
+              </CardImage>
+            </Card>
           </TinderCard>
         )}
-         {lastDirection ? <Text key={lastDirection}>You swiped {lastDirection}</Text> : <Text>Swipe a card or press a button to get started!</Text>}
-    <TouchableOpacity onPress={() => swipe('left')} style={styles.checkButton}>
-    <FontAwesomeIcon icon={ faCheck } size={50} />
-    </TouchableOpacity>
-    <TouchableOpacity onPress={() => swipe('right')} style={styles.crossButton}>
-    <FontAwesomeIcon icon={ faTimes } size={50} />
-    </TouchableOpacity>
-        <Text>Vote Average</Text>
-        <Text>Vote Count</Text>
-        <Text>Overview</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text} onPress={startButtonClicks}>
-                End Sessions
-          </Text>
-      </TouchableOpacity>
-    </View>
+      </CardContainer>
+      <Buttons>
+        <Button onPress={() => swipe('left')} title='Swipe left!' />
+        <Button onPress={() => swipe('right')} title='Swipe right!' />
+      </Buttons>
+      {lastDirection ? <InfoText key={lastDirection}>You swiped {lastDirection}</InfoText> : <InfoText>Swipe a card or press a button to get started!</InfoText>}
+    </Container>
         </LinearGradient>
   );
 }
 
+return (<Advanced ></Advanced>)
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

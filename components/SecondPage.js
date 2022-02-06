@@ -6,11 +6,25 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function SecondPage({route,navigation}) {
 
     const { groupID,code } = route.params;
+    const [data, setData] = useState([]);
+
     const startButtonClicks = () =>{
         navigation.navigate("ThirdPage",{    
-        code: code,
+        data: data,
         });
     }
+
+    useEffect(() => {
+      getMovies();
+    }, []);
+  
+
+    const getMovies = async () => {
+      const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ code +'/movies');
+      const json = await response.json();
+      setData(json.movies);
+
+  }
 
 
   return (
