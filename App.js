@@ -9,22 +9,10 @@ import FourthPage from './components/FourthPage';
 
 const Stack = createNativeStackNavigator();
 
-const MyTheme = {
-  dark: false,
-  colors: {
-    primary: 'green',
-    background: 'white',
-    card: 'black',
-    text: 'yellow',
-    border: 'green',
-    notification: 'rgb(255, 69, 58)',
-  },
-};
-
 export default function App() {
 
   return (
-    <NavigationContainer theme={MyTheme}>
+    <NavigationContainer styles={styles.container}>
       <Stack.Navigator initialRouteName='FirstPage' >
         <Stack.Screen
          name="FirstPage"
@@ -42,17 +30,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    background: 'transparent',
+    background: 'blue',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
 });

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { TextInput, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { TouchableOpacity } from 'react-native-web';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function FirstPage({ navigation }) {
     const { control, handleSubmit, formState: { errors } } = useForm({
@@ -44,7 +45,12 @@ export default function FirstPage({ navigation }) {
      }
       
   return (
-<View>
+
+<LinearGradient
+        // Background Linear Gradient
+        colors={['rgba(44, 41, 36, 0.8)','rgba(87, 68, 60, 0.8)', 'rgba(136, 87, 67, 0.8)', 'rgba(179, 87, 48, 0.8)', 'rgba(222, 79, 18, 0.8)']}
+        style={styles.background}
+      >
     {showHomeButton && <View style={styles.container}>
     <Image
          style={styles.logo} 
@@ -60,7 +66,7 @@ export default function FirstPage({ navigation }) {
     </TouchableOpacity>
     </View>
     </View> }
-    {showCreateForm && <View>
+    {showCreateForm && <View style={styles.form}>
       <Controller
         control={control}
         rules={{
@@ -68,7 +74,6 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            ref={RoomNameInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -87,7 +92,6 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            ref={NumberOfMovieInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -112,7 +116,6 @@ export default function FirstPage({ navigation }) {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            ref={RoomNumberInput}
             style={styles.input}
             onBlur={onBlur}
             onChangeText={onChange}
@@ -133,7 +136,7 @@ export default function FirstPage({ navigation }) {
       </View>}
 
 
-    </View>
+    </LinearGradient>
     
   );
 }
@@ -142,14 +145,24 @@ const styles = StyleSheet.create({
     logo:
     {
         width: 400,
-        height: 620,
+        height: 220,
         borderRadius: 35,
         borderWidth: 5
     },
+
+    background: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        height: '100%',
+      },
+
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  
   },
 
 input: {
@@ -185,4 +198,11 @@ input: {
     letterSpacing: 0.25,
     color: 'white',
   },
+
+  form:{
+    flex: 1,
+    width:'50%',
+    justifyContent:'center',
+    alignItems:'center',
+  }
 });
