@@ -4,7 +4,26 @@ import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 
-export default function FourthPage() {
+export default function FourthPage({route, navigation}) {
+    const { groupID,code } = route.params;
+    const [data, setData] = useState([]);
+
+    const getResults = async () => {
+        try {
+         const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ groupID +'/movies/ratings');
+         const json = await response.json();
+         console.log(json);
+         setData(json);
+       } catch (error) {
+         console.error(error);
+       } finally {
+         setLoading(false);
+       }
+     }
+
+     useEffect(() => {
+        getResults();
+      }, []);
 
   return (
     <LinearGradient
@@ -13,12 +32,10 @@ export default function FourthPage() {
     style={styles.background}
   >
     <View style={styles.container}>
-        <View style={styles.resultTable}>
-            
-        </View>
+      <Text> WINNER: {data[0].title}</Text>
+      <Text> Votes: {data[0].votes}</Text>
     </View>
     </LinearGradient>
-    
   );
 }
 
