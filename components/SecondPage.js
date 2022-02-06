@@ -9,16 +9,11 @@ export default function SecondPage({route,navigation}) {
     const [data, setData] = useState([]);
 
     const getMovies = async () => {
-        try {
          const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ code +'/movies');
          const json = await response.json();
-         console.log(json);
+        console.log(json)
          setData(json.movies);
-       } catch (error) {
-         console.error(error);
-       } finally {
-         setLoading(false);
-       }
+
      }
 
      useEffect(() => {

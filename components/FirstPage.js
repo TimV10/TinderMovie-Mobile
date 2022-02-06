@@ -26,7 +26,7 @@ export default function FirstPage({ navigation }) {
 
           navigation.navigate("SecondPage",{
             code: json.code,
-            groupID:json.ID,
+            groupID:json.groupID,
 
           });
         
