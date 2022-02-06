@@ -9,6 +9,7 @@ import TinderCard from 'react-tinder-card'
  
 export default function ThirdPage({navigation}) {
 
+  
   const onSwipe = (direction) => {
     console.log('You swiped: ' + direction)
   }

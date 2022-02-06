@@ -7,15 +7,28 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function FirstPage({ navigation }) {
     const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-          roomName: '',
-          numberOfMovie: '',
-          roomNumber: '',
-        }
       });
-      const onSubmit = (data) => {
-            navigation.navigate("SecondPage");
-            console.log(data)
+      const onSubmit = async (data) => {
+        console.log(data);
+            let response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: data.name,
+              num: 5
+            })
+          });
+          let json = await response.json();
+          console.log(json);
+
+          navigation.navigate("SecondPage",{
+            code: json.code,
+            groupID:json.ID,
+
+          });
         
         };
 
@@ -44,6 +57,8 @@ export default function FirstPage({ navigation }) {
 
      }
       
+
+     
   return (
 
 <LinearGradient
@@ -81,7 +96,7 @@ export default function FirstPage({ navigation }) {
             placeholder="Room Name"
           />
         )}
-        name="roomName"
+        name="name"
       />
       {errors.firstName && <Text>This is required.</Text>}
 
@@ -99,7 +114,7 @@ export default function FirstPage({ navigation }) {
             placeholder="Number Of Movie"
           />
         )}
-        name="numberOfMovie"
+        name="num"
       />
 
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
@@ -123,7 +138,7 @@ export default function FirstPage({ navigation }) {
             placeholder="Room Number"
           />
         )}
-        name="roomNumber"
+        name="joinNum"
       />
       {errors.firstName && <Text>This is required.</Text>}
 

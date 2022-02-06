@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import {FlatList, StyleSheet, Text, View } from 'react-native';
-import { Button, TouchableOpacity } from 'react-native-web';
+import {FlatList, StyleSheet, Text, View, Image } from 'react-native';
+import {TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function SecondPage({navigation}) {
+export default function SecondPage({route,navigation}) {
 
-    const [isLoading, setLoading] = useState(true);
+    const { groupID,code } = route.params;
     const [data, setData] = useState([]);
 
     const getMovies = async () => {
         try {
-         const response = await fetch('https://reactnative.dev/movies.json');
+         const response = await fetch('https://tinder-for-movies-rhv5.herokuapp.com/api/group/'+ code +'/movies');
          const json = await response.json();
+         console.log(json);
          setData(json.movies);
        } catch (error) {
          console.error(error);
@@ -37,8 +38,12 @@ export default function SecondPage({navigation}) {
     style={styles.background}
   >
     <View style={styles.container}>
-      <Text style={styles.Logo}>Logo</Text>
-      <Text style={styles.sharedLink}>Shared Code</Text>
+    <Image
+         style={styles.logo} 
+        source={require('../assets/TinderMovie2.jpg')
+        }
+      />
+      <Text>Code: {JSON.stringify(groupID)}</Text>
       <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
@@ -58,6 +63,15 @@ export default function SecondPage({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  logo:
+  {
+      marginTop:10,
+      width: '50%',
+      height: 500,
+      borderRadius: 35,
+      borderWidth: 5
+  },
+
   container: {
     flex: 1,
     alignItems: 'center',
