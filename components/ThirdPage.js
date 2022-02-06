@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image} from 'react-native';
 import { Button, TouchableOpacity } from 'react-native-web';
 import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 export default function ThirdPage({navigation}) {
 
@@ -16,6 +18,12 @@ export default function ThirdPage({navigation}) {
     style={styles.background}
   >
     <View style={styles.container}>
+    <TouchableOpacity style={styles.checkButton}>
+    <FontAwesomeIcon icon={ faCheck } size={50} />
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.crossButton}>
+    <FontAwesomeIcon icon={ faTimes } size={50} />
+    </TouchableOpacity>
         <Image
             style={{width: 100, height: 100}} 
             source={{
@@ -74,4 +82,19 @@ const styles = StyleSheet.create({
     top: 0,
     height: '100%',
   },
+
+  checkButton:{
+      position:'absolute',
+      top:'50%',
+      left:'0%',
+      marginLeft:30
+
+  },
+
+  crossButton:{
+    position:'absolute',
+    top:'50%',
+    left:'95%',
+
+}
 });
