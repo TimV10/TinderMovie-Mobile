@@ -67,14 +67,10 @@ const InfoText = styled.Text`
     z-index: -100;
 `
 
-
-
-
-
  
 export default function ThirdPage({navigation,route }) {
 
-  const {data} = route.params;
+  const {data,groupID} = route.params;
 
   const db = data;
   const alreadyRemoved = []
@@ -96,7 +92,15 @@ export default function ThirdPage({navigation,route }) {
   const outOfFrame = (name) => {
     console.log(name + ' left the screen!')
     charactersState = charactersState.filter(character => character.title !== name)
+    
+    if (charactersState.length === 0){
+      navigation.navigate("FourthPage",{    
+        data: data,
+        groupID
+        });
+    }
     setCharacters(charactersState)
+
   }
 
   const swipe = (dir) => {
@@ -108,6 +112,8 @@ export default function ThirdPage({navigation,route }) {
       childRefs[index].current.swipe(dir) // Swipe the card!
     }
   }
+
+
   return (
     <LinearGradient
     // Background Linear Gradient

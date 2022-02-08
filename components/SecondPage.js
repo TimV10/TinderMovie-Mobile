@@ -11,6 +11,7 @@ export default function SecondPage({route,navigation}) {
     const startButtonClicks = () =>{
         navigation.navigate("ThirdPage",{    
         data: data,
+        groupID: groupID
         });
     }
 
